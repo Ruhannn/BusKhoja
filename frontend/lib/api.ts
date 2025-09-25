@@ -40,9 +40,7 @@ export type RouteGroup = {
 // ------------------ Axios wrapper ------------------
 
 async function api<T>(path: string, init?: AxiosRequestConfig): Promise<T> {
-  console.log(path, init);
-  // eslint-disable-next-line node/no-process-env
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/${path}`;
+  const url = `https://api.buskhoja.xyz/${path}`;
 
   try {
     const res = await axios({

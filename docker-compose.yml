@@ -46,7 +46,7 @@ services:
       dockerfile: Dockerfile
     container_name: bus-khoja-frontend
     environment:
-      NEXT_PUBLIC_API_URL: https://api.buskhoja.xyz
+      # NEXT_PUBLIC_API_URL: https://api.buskhoja.xyz
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`buskhoja.xyz`)"
