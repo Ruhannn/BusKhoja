@@ -2,66 +2,95 @@
 
 import type { Route } from "next";
 
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 import type { Location } from "@/lib/api";
 
-import { getLocations } from "@/lib/api";
+async function getLocations(): Promise<Location[]> {
+  const { data } = await axios.get("https://api.buskhoja.xyz/get-locations");
+  return data.locations || [];
+}
 
 export default function Home() {
-  const [locations, setLocations] = useState<Location[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: locations, isLoading, isError } = useQuery<Location[]>({
+    queryKey: ["locations"],
+    queryFn: getLocations,
+  });
 
-  useEffect(() => {
-    getLocations()
-      .then((data) => {
-        console.log(data);
-        setLocations(data.locations || []);
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (loading)
+  if (isLoading)
     return <p>Loading...</p>;
-  if (!locations)
+  if (isError || !locations?.length)
     return <p>No locations available.</p>;
 
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-semibold">Find a route</h1>
+
       <form action="/routes/search" className="flex flex-wrap gap-3">
         <label className="flex flex-col gap-1">
           <span className="text-sm text-muted-foreground">From</span>
-          <select name="fromId" required className="min-w-40 rounded border p-2" defaultValue="">
-            <option value="" disabled>Select origin</option>
+          <select
+            name="fromId"
+            required
+            className="min-w-40 rounded border p-2"
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Select origin
+            </option>
             {locations.map(l => (
-              <option key={l.id} value={l.id}>{l.name}</option>
+              <option key={l.id} value={l.id}>
+                {l.name}
+              </option>
             ))}
           </select>
         </label>
+
         <label className="flex flex-col gap-1">
           <span className="text-sm text-muted-foreground">To</span>
-          <select name="toId" required className="min-w-40 rounded border p-2" defaultValue="">
-            <option value="" disabled>Select destination</option>
+          <select
+            name="toId"
+            required
+            className="min-w-40 rounded border p-2"
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Select destination
+            </option>
             {locations.map(l => (
-              <option key={l.id} value={l.id}>{l.name}</option>
+              <option key={l.id} value={l.id}>
+                {l.name}
+              </option>
             ))}
           </select>
         </label>
-        <button type="submit" className="rounded bg-black px-4 py-2 text-white">Search</button>
+
+        <button
+          type="submit"
+          className="rounded bg-black px-4 py-2 text-white"
+        >
+          Search
+        </button>
       </form>
 
       <p className="text-sm text-muted-foreground">Or browse:</p>
       <ul className="flex gap-4">
         <li>
-          <Link href={"/buses" as Route} className="underline">Buses</Link>
+          <Link href={"/buses" as Route} className="underline">
+            Buses
+          </Link>
         </li>
         <li>
-          <Link href={"/locations" as Route} className="underline">Locations</Link>
+          <Link href={"/locations" as Route} className="underline">
+            Locations
+          </Link>
         </li>
         <li>
-          <Link href={"/routes" as Route} className="underline">Routes</Link>
+          <Link href={"/routes" as Route} className="underline">
+            Routes
+          </Link>
         </li>
       </ul>
     </div>
