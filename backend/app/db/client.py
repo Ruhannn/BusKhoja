@@ -2,13 +2,10 @@ import os
 import psycopg2
 import psycopg2.extras
 
-def get_db_password():
-    return 'databasePass21312'
-
 class DB:
     def __init__(self, dsn=None):
         if dsn is None:
-            dsn = f'postgresql://Ruhan:{get_db_password()}@postgres:5432/bus-khoja'
+            dsn = f'postgresql://Ruhan:{'databasePass21312'}@postgres:5432/bus-khoja'
 
         self.dsn = dsn
         self.conn = psycopg2.connect(self.dsn)

@@ -31,8 +31,6 @@ services:
   backend:
     image: kamiruu/bus-khoja-backend:prod
     container_name: bus-khoja-backend
-    secrets:
-      - db-password
     depends_on:
       postgres:
         condition: service_healthy
