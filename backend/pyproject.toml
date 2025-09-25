@@ -1,9 +1,9 @@
 [project]
-name = "bus-khoja"
+name = "expresspython"
 version = "0.1.0"
-description = "Backend for bus-khoja"
+description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "fastapi[standard]>=0.117.1",
+    "psycopg2-binary>=2.9.10",
 ]

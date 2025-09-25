@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  images: {
+    domains: ["res.cloudinary.com", "example.com"],
+  },
 };
 
 export default nextConfig;
