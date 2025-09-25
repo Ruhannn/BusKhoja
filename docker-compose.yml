@@ -1,3 +1,5 @@
+version: "3.9"
+
 name: bus-khoja-stack
 
 services:
@@ -11,8 +13,6 @@ services:
       POSTGRES_DB: bus-khoja
       POSTGRES_USER: Ruhan
       POSTGRES_PASSWORD_FILE: /run/secrets/db-password
-    ports:
-      - "5432:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
     healthcheck:
@@ -34,8 +34,10 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    ports:
-      - "8000:8000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`buskhoja.xyz`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.backend.entrypoints=web"
     restart: unless-stopped
 
   # -------------------- Next.js Frontend --------------------
@@ -45,17 +47,43 @@ services:
       dockerfile: Dockerfile
     container_name: bus-khoja-frontend
     environment:
-      NEXT_PUBLIC_API_URL: http://backend:8000
+      NEXT_PUBLIC_API_URL: http://buskhoja.xyz/api
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`buskhoja.xyz`)"
+      - "traefik.http.routers.frontend.entrypoints=web"
     depends_on:
       - backend
+    restart: unless-stopped
+
+  # -------------------- Traefik Reverse Proxy --------------------
+  reverse-proxy:
+    image: traefik:v3.1
+    container_name: traefik
+    command:
+      - "--providers.docker"
+      - "--entrypoints.web.address=:80"
+      - "--api.insecure=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=ruhan@buskhoja.xyz"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
     ports:
-      - "3000:3000"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - letsencrypt:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
 
 # -------------------- Secrets & Volumes --------------------
 secrets:
   db-password:
-    file: /db/password.txt
+    file: ./db/password.txt
 
 volumes:
   db-data:
