@@ -22,7 +22,7 @@ services:
 
   backend:
     build:
-      context: /info/buskhoja/backend
+      context: ./backend
       dockerfile: Dockerfile
     container_name: bus-khoja-backend
     # command: python main.py
@@ -42,7 +42,7 @@ services:
 
   frontend:
     build:
-      context: /info/buskhoja/frontend
+      context: ./frontend
       dockerfile: Dockerfile
     container_name: bus-khoja-frontend
     environment:
