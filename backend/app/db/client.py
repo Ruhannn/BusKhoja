@@ -2,20 +2,17 @@ import os
 import psycopg2
 import psycopg2.extras
 
-def get_db_dsn():
-    try:
-        with open("/run/secrets/db-password", "r") as f:
-            db_password = f.read().strip()
-    except FileNotFoundError:
-        import os
-        db_password = os.getenv("DB_PASSWORD", "")
-
-    return f"postgresql://Ruhan:{db_password}@postgres:5432/bus-khoja"
+def get_db_password():
+    secret_file = "/run/secrets/db-password"
+    if os.path.exists(secret_file):
+        with open(secret_file, "r") as f:
+            return f.read().strip()
+    return os.getenv("DB_PASSWORD", "databasePass21312")
 
 class DB:
     def __init__(self, dsn=None):
         if dsn is None:
-            dsn = get_db_dsn()
+            dsn = get_db_password()
 
         self.dsn = dsn
         self.conn = psycopg2.connect(self.dsn)
