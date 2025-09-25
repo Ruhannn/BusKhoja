@@ -22,7 +22,7 @@ services:
 
   backend:
     build:
-      context: ./backend
+      context: /info/buskhoja/backend
       dockerfile: Dockerfile
     container_name: bus-khoja-backend
     command: uv run main.py
@@ -42,7 +42,7 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: /info/buskhoja/frontend
       dockerfile: Dockerfile
     container_name: bus-khoja-frontend
     environment:
@@ -77,14 +77,24 @@ services:
       - "443:443"
       - "8080:8080"
     volumes:
-      - ./letsencrypt:/letsencrypt
+      - /info/letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
 
 secrets:
   db-password:
-    file: ./db/password.txt
+    file: /info/password.txt
 
 volumes:
   db-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /info/db-data
+      o: bind
   letsencrypt:
+    driver: local
+    driver_opts:
+      type: none
+      device: /info/letsencrypt
+      o: bind
