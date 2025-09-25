@@ -5,8 +5,14 @@ import psycopg2.extras
 class DB:
     def __init__(self, dsn=None):
         if dsn is None:
-            dsn = "postgresql://Ruhan:databasePass21312@postgres:5432/bus-khoja"
-
+            secret_file = "/run/secrets/db-password"
+            try:
+                with open(secret_file, "r") as f:
+                    db_password = f.read().strip()
+            except FileNotFoundError:
+                raise RuntimeError(f"Docker secret file not found: {secret_file}")
+            dsn = ""
+            dsn = f'postgresql://Ruhan:{db_password}@postgres:5432/bus-khoja'
 
         self.dsn = dsn
         self.conn = psycopg2.connect(self.dsn)

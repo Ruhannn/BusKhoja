@@ -1,0 +1,24 @@
+#!/bin/sh
+
+
+if [ -z "$3" ]; then
+    echo "Usage: bu push [b|f] \"commit message\""
+    exit 1
+fi
+
+
+git add .
+git commit -m "$3"
+git push
+
+
+if [ "$2" = "b" ]; then
+    docker build -t kamiruu/bus-khoja-backend:prod ./backend
+    docker push kamiruu/bus-khoja-backend:prod
+elif [ "$2" = "f" ]; then
+    docker build -t kamiruu/bus-khoja-frontend:prod ./frontend
+    docker push kamiruu/bus-khoja-frontend:prod
+else
+    echo "Usage: bu push [b|f] \"commit message\""
+    exit 1
+fi
