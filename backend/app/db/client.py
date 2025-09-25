@@ -7,7 +7,7 @@ def get_db_password():
     if os.path.exists(secret_file):
         with open(secret_file, "r") as f:
             return f.read().strip()
-    return os.getenv("DB_PASSWORD", "")
+    return os.getenv("DB_PASSWORD", "databasePass21312")
 
 class DB:
     def __init__(self, dsn=None):
