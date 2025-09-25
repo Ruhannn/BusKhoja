@@ -8,38 +8,38 @@ from ..controllers.bus_controllers import (
 
 def handle_bus_routes(app):
     # create bus
-    @app.options("/api/create-bus")
+    @app.options("/create-bus")
     def route(req):
         req.send(204, "")
 
-    @app.post("/api/create-bus")
+    @app.post("/create-bus")
     def route(req):
         return create_bus(req)
 
     # get all buses
-    @app.get("/api/get-buses")
+    @app.get("/get-buses")
     def route(req):
         return get_buses(req)
 
     # get bus by id
-    @app.get("/api/get-bus/:id")
+    @app.get("/get-bus/:id")
     def route(req):
         return get_bus_by_id(req)
 
     # update bus
-    @app.options("/api/update-bus/:id")
+    @app.options("/update-bus/:id")
     def route(req):
         req.send(204, "")
 
-    @app.put("/api/update-bus/:id")
+    @app.put("/update-bus/:id")
     def route(req):
         return update_bus(req)
 
     # delete bus
-    @app.options("/api/delete-bus/:id")
+    @app.options("/delete-bus/:id")
     def route(req):
         req.send(204, "")
 
-    @app.delete("/api/delete-bus/:id")
+    @app.delete("/delete-bus/:id")
     def route(req):
         return delete_bus(req)
