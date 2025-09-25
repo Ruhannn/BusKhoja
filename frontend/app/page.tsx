@@ -15,7 +15,10 @@ export default function Home() {
 
   useEffect(() => {
     getLocations()
-      .then(data => setLocations(data.locations || []))
+      .then((data) => {
+        console.log(data);
+        setLocations(data.locations || []);
+      })
       .finally(() => setLoading(false));
   }, []);
 

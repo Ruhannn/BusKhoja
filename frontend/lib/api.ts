@@ -51,6 +51,8 @@ async function api<T>(path: string, init?: AxiosRequestConfig): Promise<T> {
         ...(init?.headers || {}),
       },
     });
+    console.log(res); // --- IGNORE ---
+    console.log(url, init, res.data); // --- IGNORE ---
     return res.data as T;
   }
   catch (error: any) {
