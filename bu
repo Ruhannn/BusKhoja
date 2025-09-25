@@ -13,11 +13,11 @@ git push
 
 
 if [ "$2" = "b" ]; then
-    docker build -t kamiruu/bus-khoja-backend:prod ./backend
-    docker push kamiruu/bus-khoja-backend:prod
+    docker build -t kamiruu/bus-khoja-backend:latest ./backend
+    docker push kamiruu/bus-khoja-backend:latest
 elif [ "$2" = "f" ]; then
-    docker build -t kamiruu/bus-khoja-frontend:prod ./frontend
-    docker push kamiruu/bus-khoja-frontend:prod
+    docker build -t kamiruu/bus-khoja-frontend:latest ./frontend
+    docker push kamiruu/bus-khoja-frontend:latest
 else
     echo "Usage: bu push [b|f] \"commit message\""
     exit 1

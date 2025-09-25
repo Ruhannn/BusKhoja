@@ -30,7 +30,7 @@ services:
     restart: unless-stopped
 
   backend:
-    image: kamiruu/bus-khoja-backend:prod
+    image: kamiruu/bus-khoja-backend:latest
     container_name: bus-khoja-backend
     secrets:
       - db-password
@@ -54,7 +54,7 @@ services:
     restart: unless-stopped
 
   frontend:
-    image: kamiruu/bus-khoja-frontend:prod
+    image: kamiruu/bus-khoja-frontend:latest
     container_name: bus-khoja-frontend
     labels:
       - "traefik.enable=true"
