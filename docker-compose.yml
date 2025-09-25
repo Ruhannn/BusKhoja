@@ -25,21 +25,19 @@ services:
       context: /info/buskhoja/backend
       dockerfile: Dockerfile
     container_name: bus-khoja-backend
-    command: uv run main.py
+    # command: python main.py
     environment:
       DATABASE_URL: postgresql://Ruhan:hmmmmmmmmm@postgres:5432/bus-khoja
     depends_on:
       postgres:
         condition: service_healthy
     labels:
-    - "traefik.enable=true"
-    - "traefik.http.routers.backend.rule=Host(`buskhoja.xyz`) && PathPrefix(`/api`)"
-    - "traefik.http.routers.backend.entrypoints=websecure"
-    - "traefik.http.routers.backend.tls=true"
-    - "traefik.http.routers.backend.tls.certresolver=myresolver"
-    - "traefik.http.services.backend.loadbalancer.server.port=8000"
-    - "traefik.http.middlewares.backend-stripprefix.stripPrefix=/api"
-    - "traefik.http.routers.backend.middlewares=backend-stripprefix"
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`api.buskhoja.xyz`)"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls=true"
+      - "traefik.http.routers.backend.tls.certresolver=myresolver"
+      - "traefik.http.services.backend.loadbalancer.server.port=8000"
     restart: unless-stopped
 
   frontend:
@@ -48,7 +46,7 @@ services:
       dockerfile: Dockerfile
     container_name: bus-khoja-frontend
     environment:
-      NEXT_PUBLIC_API_URL: https://buskhoja.xyz/api
+      NEXT_PUBLIC_API_URL: https://api.buskhoja.xyz
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`buskhoja.xyz`)"
