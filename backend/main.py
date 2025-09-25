@@ -13,5 +13,8 @@ handle_bus_routes(app)
 handle_location_routes(app)
 handle_route_routes(app)
 
+@app.get('/')
+def index():
+    return "Bus Khoja API is running."
 
 app.run()
