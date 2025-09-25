@@ -7,6 +7,9 @@ from ..controllers.bus_controllers import (
 )
 
 def handle_bus_routes(app):
+    @app.get("/")
+    def route(req):
+        req.send(204, "Bus Khoja API is running.")
     # create bus
     @app.options("/create-bus")
     def route(req):
