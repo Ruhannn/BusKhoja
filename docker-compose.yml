@@ -1,4 +1,3 @@
-version: "3.9"
 name: bus-khoja-stack
 
 services:
@@ -21,11 +20,8 @@ services:
     restart: unless-stopped
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: kamiruu/bus-khoja-backend:latest
     container_name: bus-khoja-backend
-    # command: python main.py
     environment:
       DATABASE_URL: postgresql://Ruhan:hmmmmmmmmm@postgres:5432/bus-khoja
     depends_on:
@@ -41,12 +37,8 @@ services:
     restart: unless-stopped
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: kamiruu/bus-khoja-frontend:latest
     container_name: bus-khoja-frontend
-    # environment:
-      # NEXT_PUBLIC_API_URL: https://api.buskhoja.xyz
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`buskhoja.xyz`)"
