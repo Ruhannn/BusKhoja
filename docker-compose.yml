@@ -1,6 +1,15 @@
 name: bus-khoja-stack
 
 services:
+  watchtower:
+    image: containrrr/watchtower
+    command:
+      - "--label-enable"
+      - "--interval"
+      - "30"
+      - "--rolling-restart"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   postgres:
     image: postgres:15
     container_name: bus-khoja-postgres
@@ -20,7 +29,7 @@ services:
     restart: unless-stopped
 
   backend:
-    image: kamiruu/bus-khoja-backend:latest
+    image: kamiruu/bus-khoja-backend:prod
     container_name: bus-khoja-backend
     environment:
       DATABASE_URL: postgresql://Ruhan:hmmmmmmmmm@postgres:5432/bus-khoja
@@ -34,10 +43,11 @@ services:
       - "traefik.http.routers.backend.tls=true"
       - "traefik.http.routers.backend.tls.certresolver=myresolver"
       - "traefik.http.services.backend.loadbalancer.server.port=8000"
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
 
   frontend:
-    image: kamiruu/bus-khoja-frontend:latest
+    image: kamiruu/bus-khoja-frontend:prod
     container_name: bus-khoja-frontend
     labels:
       - "traefik.enable=true"
@@ -46,6 +56,7 @@ services:
       - "traefik.http.routers.frontend.tls=true"
       - "traefik.http.routers.frontend.tls.certresolver=myresolver"
       - "traefik.http.services.frontend.loadbalancer.server.port=3000"
+      - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - backend
     restart: unless-stopped
