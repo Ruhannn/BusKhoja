@@ -57,11 +57,13 @@ async function api<T>(path: string, init?: AxiosRequestConfig): Promise<T> {
   }
   catch (error: any) {
     if (error.response) {
+      console.log(error.response); // --- IGNORE ---
       throw new Error(
         `API ${error.response.status}: ${JSON.stringify(error.response.data)}`,
       );
     }
     else {
+      console.log(error); // --- IGNORE ---
       throw new Error(`API request failed: ${error.message}`);
     }
   }
