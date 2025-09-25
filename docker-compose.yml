@@ -45,7 +45,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: bus-khoja-frontend
-    environment:
+    # environment:
       # NEXT_PUBLIC_API_URL: https://api.buskhoja.xyz
     labels:
       - "traefik.enable=true"
