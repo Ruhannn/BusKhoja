@@ -10,6 +10,7 @@ services:
       - "--rolling-restart"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
   postgres:
     image: postgres:15
     container_name: bus-khoja-postgres
@@ -31,6 +32,14 @@ services:
   backend:
     image: kamiruu/bus-khoja-backend:prod
     container_name: bus-khoja-backend
+    secrets:
+      - db-password
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: Ruhan
+      DB_NAME: bus-khoja
+      DB_PASSWORD_FILE: /run/secrets/db-password
     depends_on:
       postgres:
         condition: service_healthy

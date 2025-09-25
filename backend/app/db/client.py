@@ -7,6 +7,7 @@ class DB:
         if dsn is None:
             dsn = "postgresql://Ruhan:databasePass21312@postgres:5432/bus-khoja"
 
+
         self.dsn = dsn
         self.conn = psycopg2.connect(self.dsn)
 
