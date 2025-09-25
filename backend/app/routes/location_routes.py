@@ -8,38 +8,38 @@ from ..controllers.location_controllers import (
 
 def handle_location_routes(app):
     # create location
-    @app.options("/create-location")
+    @app.options("/api/create-location")
     def route(req):
         req.send(204, "")
 
-    @app.post("/create-location")
+    @app.post("/api/create-location")
     def route(req):
         return create_location(req)
 
     # get all locations
-    @app.get("/get-locations")
+    @app.get("/api/get-locations")
     def route(req):
         return get_locations(req)
 
     # get location by id
-    @app.get("/get-location/:id")
+    @app.get("/api/get-location/:id")
     def route(req):
         return get_location_by_id(req)
 
     # update location
-    @app.options("/update-location/:id")
+    @app.options("/api/update-location/:id")
     def route(req):
         req.send(204, "")
 
-    @app.put("/update-location/:id")
+    @app.put("/api/update-location/:id")
     def route(req):
         return update_location(req)
 
     # delete location
-    @app.options("/delete-location/:id")
+    @app.options("/api/delete-location/:id")
     def route(req):
         req.send(204, "")
 
-    @app.delete("/delete-location/:id")
+    @app.delete("/api/delete-location/:id")
     def route(req):
         return delete_location(req)
