@@ -7,12 +7,12 @@ def get_db_password():
     if os.path.exists(secret_file):
         with open(secret_file, "r") as f:
             return f.read().strip()
-    return os.getenv("DB_PASSWORD", "databasePass21312")
+    return os.getenv("DB_PASSWORD", "")
 
 class DB:
     def __init__(self, dsn=None):
         if dsn is None:
-            dsn = get_db_password()
+            dsn = f'postgresql://Ruhan:{get_db_password()}@postgres:5432/bus-khoja'
 
         self.dsn = dsn
         self.conn = psycopg2.connect(self.dsn)
