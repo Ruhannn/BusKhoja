@@ -1,98 +1,30 @@
-"use client";
-
-import type { Route } from "next";
-
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import Link from "next/link";
-
-import type { Location } from "@/lib/api";
-
-async function getLocations(): Promise<Location[]> {
-  const { data } = await axios.get("https://api.buskhoja.xyz/get-locations");
-  return data.locations || [];
-}
+import { FeaturesSection } from "@/components/features-section";
+import { HeroSection } from "@/components/hero-section";
+import { QuickLinks } from "@/components/quick-links";
+import { RouteFinder } from "@/components/route-finder";
 
 export default function Home() {
-  const { data: locations, isLoading, isError } = useQuery<Location[]>({
-    queryKey: ["locations"],
-    queryFn: getLocations,
-  });
-
-  if (isLoading)
-    return <p>Loading...</p>;
-  if (isError || !locations?.length)
-    return <p>No locations available.</p>;
-
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">Find a route</h1>
+    <div className="min-h-screen">
 
-      <form action="/routes/search" className="flex flex-wrap gap-3">
-        <label className="flex flex-col gap-1">
-          <span className="text-sm text-muted-foreground">From</span>
-          <select
-            name="fromId"
-            required
-            className="min-w-40 rounded border p-2"
-            defaultValue=""
-          >
-            <option value="" disabled>
-              Select origin
-            </option>
-            {locations.map(l => (
-              <option key={l.id} value={l.id}>
-                {l.name}
-              </option>
-            ))}
-          </select>
-        </label>
+      {/* Hero Section */}
+      <HeroSection />
 
-        <label className="flex flex-col gap-1">
-          <span className="text-sm text-muted-foreground">To</span>
-          <select
-            name="toId"
-            required
-            className="min-w-40 rounded border p-2"
-            defaultValue=""
-          >
-            <option value="" disabled>
-              Select destination
-            </option>
-            {locations.map(l => (
-              <option key={l.id} value={l.id}>
-                {l.name}
-              </option>
-            ))}
-          </select>
-        </label>
+      {/* Route Finder */}
+      <section id="route-finder" className="px-4 py-16 sm:px-6 lg:px-8">
+        <RouteFinder />
+      </section>
 
-        <button
-          type="submit"
-          className="rounded bg-black px-4 py-2 text-white"
-        >
-          Search
-        </button>
-      </form>
+      {/* Features Section */}
+      <FeaturesSection />
 
-      <p className="text-sm text-muted-foreground">Or browse:</p>
-      <ul className="flex gap-4">
-        <li>
-          <Link href={"/buses" as Route} className="underline">
-            Buses
-          </Link>
-        </li>
-        <li>
-          <Link href={"/locations" as Route} className="underline">
-            Locations
-          </Link>
-        </li>
-        <li>
-          <Link href={"/routes" as Route} className="underline">
-            Routes
-          </Link>
-        </li>
-      </ul>
+      {/* Quick Links */}
+      <section className="px-4 py-16 sm:px-6 lg:px-8 bg-muted/20">
+        <div className="mx-auto max-w-6xl">
+          <QuickLinks />
+        </div>
+      </section>
+
     </div>
   );
 }

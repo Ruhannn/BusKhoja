@@ -21,8 +21,37 @@ def create_route(req):
     req.send(200, res)
 
 # get all routes
+from app.db.client import DB
+
+db = DB()
+
 def get_routes(req):
-    routes = db.all("SELECT * FROM route")
+    query = """
+    SELECT
+        r.id AS route_id,
+        r.price,
+        l1.id AS from_id,
+        l1.name AS from_name,
+        l2.id AS to_id,
+        l2.name AS to_name,
+        COALESCE(
+            json_agg(
+                json_build_object(
+                    'id', b.id,
+                    'name', b.name,
+                    'picture', b.picture,
+                    'full_path', b.full_path
+                )
+            ) FILTER (WHERE b.id IS NOT NULL),
+            '[]'
+        ) AS buses
+    FROM route r
+    JOIN location l1 ON r.from_id = l1.id
+    JOIN location l2 ON r.to_id = l2.id
+    LEFT JOIN bus b ON b.route_id = r.id
+    GROUP BY r.id, r.price, l1.id, l2.id;
+    """
+    routes = db.all(query)
     res = {"routes": [dict(route) for route in routes]}
     req.send(200, res)
 
