@@ -2,17 +2,20 @@ import os
 import psycopg2
 import psycopg2.extras
 
+def get_db_dsn():
+    try:
+        with open("/run/secrets/db-password", "r") as f:
+            db_password = f.read().strip()
+    except FileNotFoundError:
+        import os
+        db_password = os.getenv("DB_PASSWORD", "")
+
+    return f"postgresql://Ruhan:{db_password}@postgres:5432/bus-khoja"
+
 class DB:
     def __init__(self, dsn=None):
         if dsn is None:
-            secret_file = "/run/secrets/db-password"
-            try:
-                with open(secret_file, "r") as f:
-                    db_password = f.read().strip()
-            except FileNotFoundError:
-                raise RuntimeError(f"Docker secret file not found: {secret_file}")
-            dsn = ""
-            dsn = f'postgresql://Ruhan:{db_password}@postgres:5432/bus-khoja'
+            dsn = get_db_dsn()
 
         self.dsn = dsn
         self.conn = psycopg2.connect(self.dsn)

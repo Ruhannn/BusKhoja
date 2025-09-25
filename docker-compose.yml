@@ -31,8 +31,8 @@ services:
   backend:
     image: kamiruu/bus-khoja-backend:prod
     container_name: bus-khoja-backend
-    environment:
-      DATABASE_URL: "postgresql://Ruhan:$(cat /run/secrets/db-password)@postgres:5432/bus-khoja"
+    secrets:
+      - db-password
     depends_on:
       postgres:
         condition: service_healthy
