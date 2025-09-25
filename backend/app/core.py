@@ -19,7 +19,6 @@ class App:
     def delete(self, path): return self._add_route('DELETE', path)
     def options(self, path): return self._add_route('OPTIONS', path)
 
-
     def _add_route(self, method, path):
         param_names = re.findall(r':(\w+)', path)
         regex_path = re.sub(r':\w+', r'([^/]+)', path)
@@ -38,6 +37,14 @@ class App:
                 parsed_path = urllib.parse.urlparse(self.path)
                 path = parsed_path.path
                 query = urllib.parse.parse_qs(parsed_path.query)
+
+
+                if not path.startswith("/api"):
+                    self.send_error(404, f"No {method} handler for {path}")
+                    return
+
+
+                path = path[4:]
 
                 for regex, param_names, handler in app.routes[method]:
                     match = regex.match(path)
