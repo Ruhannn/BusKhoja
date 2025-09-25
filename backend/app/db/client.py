@@ -3,10 +3,6 @@ import psycopg2
 import psycopg2.extras
 
 def get_db_password():
-    secret_file = "/run/secrets/db-password"
-    if os.path.exists(secret_file):
-        with open(secret_file, "r") as f:
-            return f.read().strip()
     return 'databasePass21312'
 
 class DB:
