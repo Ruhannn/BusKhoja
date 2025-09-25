@@ -40,7 +40,7 @@ export type RouteGroup = {
 // ------------------ Axios wrapper ------------------
 
 async function api<T>(path: string, init?: AxiosRequestConfig): Promise<T> {
-  const url = `https://api.buskhoja.xyz/${path}`;
+  const url = `https://api.buskhoja.xyz${path}`;
 
   try {
     const res = await axios({
