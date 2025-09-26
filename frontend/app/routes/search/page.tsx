@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, Bus, Filter, GraduationCap, MapPin, Users } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 
 import type { RouteGroup } from "@/lib/api";
 
@@ -15,7 +15,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { searchRoutes } from "@/lib/api";
 
-export default function RouteSearchPage() {
+const SuccessPage: React.FC = () => {
+  return (
+    <div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <RouteSearchPage />
+      </Suspense>
+    </div>
+  );
+};
+
+function RouteSearchPage() {
   const searchParams = useSearchParams();
   const fromId = searchParams.get("fromId");
   const toId = searchParams.get("toId");
@@ -349,3 +359,5 @@ export default function RouteSearchPage() {
     </div>
   );
 }
+
+export default SuccessPage;
