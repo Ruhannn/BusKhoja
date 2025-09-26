@@ -28,7 +28,6 @@ def create_tables():
         id SERIAL PRIMARY KEY,
         name TEXT NOT NULL,
         picture TEXT,
-        full_path TEXT NOT NULL,
         route_id INT NOT NULL REFERENCES route(id) ON DELETE CASCADE
     );
     """)
