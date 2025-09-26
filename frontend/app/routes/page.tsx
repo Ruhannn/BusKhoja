@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import type { Route } from "@/lib/api";
 
+import { AnimatedGroup } from "@/components/ui/animated-group";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { api } from "@/lib/api";
@@ -66,9 +67,9 @@ export default function RoutesPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {routes.routes.map(route => (
-            <Card key={route.id} className="group hover:shadow-lg transition-all duration-300 border-0 bg-card">
+        <AnimatedGroup preset="slide" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {routes.routes.map((route, i) => (
+            <Card key={i} className="group hover:shadow-lg transition-all duration-300 border-0 bg-card">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg font-semibold">{route.id}</CardTitle>
@@ -101,7 +102,7 @@ export default function RoutesPage() {
               </CardContent>
             </Card>
           ))}
-        </div>
+        </AnimatedGroup>
       </div>
     </div>
   );

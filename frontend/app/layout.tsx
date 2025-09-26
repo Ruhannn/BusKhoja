@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { Toaster } from "@/components/ui/sonner";
 import QueryProvider from "@/provider/query-provider";
 import { ThemeProvider } from "@/provider/theme-provider";
 
@@ -29,6 +30,7 @@ export default function RootLayout({
         <body className={`${inter.variable} antialiased`}>
           <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
             <main>
+              <Toaster />
               <Header />
               {children}
               <Footer />

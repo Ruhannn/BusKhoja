@@ -48,8 +48,7 @@ function LocationMarker({ onLocation }: { onLocation: (pos: L.LatLng) => void })
 
 export default function Map() {
   const [bus, setBus] = useState(false);
-  const busPosition: LatLngTuple = [23.82501089445467, 90.36420338846231];
-  const offset = 0.0005;
+
   return (
     <MapContainer
       center={{ lat: 23.8103, lng: 90.4125 }}
@@ -65,28 +64,21 @@ export default function Map() {
         ? (
             <>
 
-              <Marker
-                position={[busPosition[0] + offset, busPosition[1]]}
-                icon={busIcon}
-              >
-                <Popup>Bosumoti</Popup>
-              </Marker>
-
-              <Marker position={busPosition} icon={busIcon}>
+              <Marker position={[23.829309910104588, 90.36784940356998]} icon={busIcon}>
                 <Popup>Super link</Popup>
               </Marker>
 
               <Marker
-                position={[busPosition[0] - offset, busPosition[1]]}
+                position={[23.8250108944537, 90.36420338846231]}
                 icon={busIcon}
               >
-                <Popup>Prorisstan</Popup>
+                <Popup>Bosumoti</Popup>
               </Marker>
               <Marker
                 position={[23.829024583539244, 90.36380055752866]}
                 icon={busIcon}
               >
-                <Popup>ROb rob</Popup>
+                <Popup>Bikolpo</Popup>
               </Marker>
               <Marker
                 position={[23.82715460175573, 90.3641203603026]}

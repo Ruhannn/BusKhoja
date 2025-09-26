@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import type { Location } from "@/lib/api";
 
+import { AnimatedGroup } from "@/components/ui/animated-group";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { api } from "@/lib/api";
@@ -64,7 +65,7 @@ export default function LocationsPage() {
           {locations.locations.length !== 1 ? "s" : ""}
         </Badge>
       </div>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <AnimatedGroup preset="slide" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {locations.locations.map(location => (
           <Card key={location.id} className="hover:shadow-md transition-shadow">
             <CardContent className="p-4">
@@ -79,7 +80,7 @@ export default function LocationsPage() {
             </CardContent>
           </Card>
         ))}
-      </div>
+      </AnimatedGroup>
     </div>
   );
 }

@@ -51,7 +51,6 @@ function RouteSearchPage() {
     return (originalPrice: number) => {
       if (passengerType === "student") {
         const discountedPrice = Math.round(originalPrice * 0.5);
-        // Ensure minimum price of 10 taka even with student discount
         return Math.max(discountedPrice, 10);
       }
       return originalPrice;
@@ -105,6 +104,7 @@ function RouteSearchPage() {
           </motion.button>
 
           <motion.button
+            disabled={(routeGroups?.length ?? 0) > 0}
             whileTap={{ scale: 0.98 }}
             onClick={() => {
               setPassengerType("student");
@@ -189,21 +189,23 @@ function RouteSearchPage() {
             </div>
 
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground mb-2">Bus Routes</h1>
-            <div className="flex items-center gap-2 sm:gap-4 text-sm sm:text-base flex-wrap">
-              <div className="flex items-center gap-1 sm:gap-2">
-                <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
-                <span className="font-semibold text-primary truncate max-w-[120px] sm:max-w-none">
-                  {routeGroups?.[0]?.from.name}
-                </span>
+            {routeGroups && routeGroups[0].from.name && routeGroups[0].to.name && (
+              <div className="flex items-center gap-2 sm:gap-4 text-sm sm:text-base flex-wrap">
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
+                  <span className="font-semibold text-primary truncate max-w-[120px] sm:max-w-none">
+                    {routeGroups[0].from.name}
+                  </span>
+                </div>
+                <div className="text-lg text-muted-foreground">→</div>
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
+                  <span className="font-semibold text-primary truncate max-w-[120px] sm:max-w-none">
+                    {routeGroups[0].to.name}
+                  </span>
+                </div>
               </div>
-              <div className="text-lg text-muted-foreground">→</div>
-              <div className="flex items-center gap-1 sm:gap-2">
-                <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
-                <span className="font-semibold text-primary truncate max-w-[120px] sm:max-w-none">
-                  {routeGroups?.[0]?.to.name}
-                </span>
-              </div>
-            </div>
+            )}
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6">
@@ -281,55 +283,63 @@ function RouteSearchPage() {
                             options)
                           </CardTitle>
                         </CardHeader>
-                        <CardContent className="space-y-3">
-                          {routeGroup.buses.map((busOnRoute, busIndex) => (
-                            <motion.div
-                              key={busIndex}
-                              initial={{ opacity: 0, x: -20 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: busIndex * 0.1 }}
-                              className="flex gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors border border-transparent hover:border-primary/20"
-                            >
-                              <Image
-                                width={5000}
-                                height={5000}
-                                src={busOnRoute.bus.picture || "/placeholder.svg?height=48&width=64&query=bus"}
-                                alt={busOnRoute.bus.name}
-                                className="w-12 h-9 sm:w-16 sm:h-12 rounded object-cover flex-shrink-0"
-                              />
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-start justify-between gap-3">
-                                  <div className="flex-1 min-w-0">
-                                    <h3 className="font-semibold text-foreground text-sm sm:text-base truncate">
-                                      {busOnRoute.bus.name}
-                                    </h3>
-                                    {busOnRoute.bus.full_path && (
-                                      <div className="flex items-center gap-1 mt-1 text-xs text-muted-foreground">
-                                        <MapPin className="h-3 w-3 flex-shrink-0" />
-                                        <span className="truncate">{busOnRoute.bus.full_path}</span>
-                                      </div>
-                                    )}
-                                  </div>
-                                  <div className="text-right flex-shrink-0">
-                                    <div className="flex flex-col items-end">
-                                      <div className="text-base sm:text-lg font-bold text-primary">
-                                        ৳
-                                        {calculatePrice(busOnRoute.price)}
-                                      </div>
-                                      {passengerType === "student"
-                                        && calculatePrice(busOnRoute.price) !== busOnRoute.price && (
-                                        <div className="text-xs text-muted-foreground line-through">
-                                          ৳
-                                          {busOnRoute.price}
+                        {routeGroup.buses.length > 0
+                          ? (
+                              <CardContent className="space-y-3">
+                                {routeGroup.buses.map((busOnRoute, busIndex) => (
+                                  <motion.div
+                                    key={busIndex}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: busIndex * 0.1 }}
+                                    className="flex gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors border border-transparent hover:border-primary/20"
+                                  >
+                                    <Image
+                                      width={5000}
+                                      height={5000}
+                                      src={busOnRoute.bus.picture || "/placeholder.svg?height=48&width=64&query=bus"}
+                                      alt={busOnRoute.bus.name}
+                                      className="w-12 h-9 sm:w-16 sm:h-12 rounded object-cover flex-shrink-0"
+                                    />
+                                    <div className="flex-1 min-w-0">
+                                      <div className="flex items-start justify-between gap-3">
+                                        <div className="flex-1 min-w-0">
+                                          <h3 className="font-semibold text-foreground text-sm sm:text-base truncate">
+                                            {busOnRoute.bus.name}
+                                          </h3>
+                                          {busOnRoute.bus.full_path && (
+                                            <div className="flex items-center gap-1 mt-1 text-xs text-muted-foreground">
+                                              <MapPin className="h-3 w-3 flex-shrink-0" />
+                                              <span className="truncate">{busOnRoute.bus.full_path}</span>
+                                            </div>
+                                          )}
                                         </div>
-                                      )}
+                                        <div className="text-right flex-shrink-0">
+                                          <div className="flex flex-col items-end">
+                                            <div className="text-base sm:text-lg font-bold text-primary">
+                                              ৳
+                                              {calculatePrice(busOnRoute.price)}
+                                            </div>
+                                            {passengerType === "student"
+                                              && calculatePrice(busOnRoute.price) !== busOnRoute.price && (
+                                              <div className="text-xs text-muted-foreground line-through">
+                                                ৳
+                                                {busOnRoute.price}
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </div>
                                     </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </motion.div>
-                          ))}
-                        </CardContent>
+                                  </motion.div>
+                                ))}
+                              </CardContent>
+                            )
+                          : (
+                              <CardContent className="space-y-3">
+                                <p className="text-sm text-muted-foreground">No buses available for this route.</p>
+                              </CardContent>
+                            )}
                       </Card>
                     </motion.div>
                   ))}

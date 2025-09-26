@@ -8,21 +8,11 @@ import { AnimatedGroup } from "./ui/animated-group";
 import { LineShadowText } from "./ui/line-shadow-text";
 import { Magnetic } from "./ui/magnetic";
 import { NumberTicker } from "./ui/number-ticker";
-import { Particles } from "./ui/particles";
 
 export function HeroSection() {
   return (
-    <div className="relative overflow-hidden">
-      <Particles
-        className="absolute inset-0 z-0"
-        quantity={250}
-        ease={80}
-        color="#000000"
-        refresh
-
-      />
-
-      <div className="relative px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32 z-10">
+    <>
+      <div>
         <AnimatedGroup
           variants={{
             container: {
@@ -144,6 +134,6 @@ export function HeroSection() {
           </AnimatedGroup>
         </AnimatedGroup>
       </div>
-    </div>
+    </>
   );
 }

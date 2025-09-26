@@ -20,6 +20,8 @@ services:
       POSTGRES_DB: bus-khoja
       POSTGRES_USER: Ruhan
       POSTGRES_PASSWORD_FILE: /run/secrets/db-password
+    ports:
+      - "5432:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
     healthcheck:

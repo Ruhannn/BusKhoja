@@ -1,10 +1,12 @@
 "use client";
 
+import { Bus } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import type { Bus } from "@/lib/api";
 
+import { AnimatedGroup } from "@/components/ui/animated-group";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { api } from "@/lib/api";
@@ -50,7 +52,7 @@ export default function BusesPage() {
         </Badge>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <AnimatedGroup preset="slide" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {buses.buses.map(bus => (
           <Card key={bus.id} className="group hover:shadow-md transition-shadow duration-200">
             <CardContent className="p-4">
@@ -59,7 +61,7 @@ export default function BusesPage() {
                   {bus.picture
                     ? (
                         <Image
-                          src={bus.picture || "/placeholder.svg"}
+                          src={bus.picture}
                           alt={bus.name}
                           width={48}
                           height={48}
@@ -68,19 +70,7 @@ export default function BusesPage() {
                       )
                     : (
                         <div className="h-12 w-12 rounded-lg bg-muted flex items-center justify-center border">
-                          <svg
-                            className="h-6 w-6 text-muted-foreground"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2v0M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
-                            />
-                          </svg>
+                          <Bus />
                         </div>
                       )}
                 </div>
@@ -94,7 +84,7 @@ export default function BusesPage() {
             </CardContent>
           </Card>
         ))}
-      </div>
+      </AnimatedGroup>
     </div>
   );
 }

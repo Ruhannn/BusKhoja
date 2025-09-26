@@ -8,22 +8,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Marquee } from "./ui/marquee";
 
 const popularRoutes = [
-  // TODO:
-  { from: "Motijheel", to: "Uttara", fare: "৳35" },
-  { from: "Dhanmondi", to: "Gulshan", fare: "৳25" },
+  { from: "Mirpur", to: "Airport", fare: "৳20" },
+  { from: "Dhanmondi", to: "Gulshan", fare: "৳30" },
   { from: "Old Dhaka", to: "New Market", fare: "৳20" },
-  { from: "Motijheel", to: "Uttara", fare: "৳35" },
-  { from: "Dhanmondi", to: "Gulshan", fare: "৳25" },
-  { from: "Old Dhaka", to: "New Market", fare: "৳20" },
-  { from: "Motijheel", to: "Uttara", fare: "৳35" },
-  { from: "Dhanmondi", to: "Gulshan", fare: "৳25" },
-  { from: "Old Dhaka", to: "New Market", fare: "৳20" },
-  { from: "Motijheel", to: "Uttara", fare: "৳35" },
-  { from: "Dhanmondi", to: "Gulshan", fare: "৳25" },
-  { from: "Old Dhaka", to: "New Market", fare: "৳20" },
-  { from: "Motijheel", to: "Uttara", fare: "৳35" },
-  { from: "Dhanmondi", to: "Gulshan", fare: "৳25" },
-  { from: "Old Dhaka", to: "New Market", fare: "৳20" },
+  { from: "Banani", to: "Gazipur", fare: "৳40" },
+  { from: "Motijheel", to: "Uttara", fare: "৳60" },
+  { from: "Jamuna Future Park", to: "Gulshan", fare: "৳20" },
+  { from: "Air Port", to: "Badda", fare: "৳40" },
 ];
 
 export function QuickLinks() {
