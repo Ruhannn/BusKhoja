@@ -7,9 +7,9 @@ if [ -z "$3" ]; then
 fi
 
 
-git add .
-git commit -m "$3"
-git push
+# git add .
+# git commit -m "$3"
+# git push
 
 
 if [ "$2" = "b" ]; then

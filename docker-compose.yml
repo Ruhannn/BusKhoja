@@ -43,6 +43,7 @@ services:
       DB_NAME: bus-khoja
       DB_PASSWORD_FILE: /run/secrets/db-password
       DATABASE_URL: ${DATABASE_URL}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
     depends_on:
       postgres:
         condition: service_healthy
