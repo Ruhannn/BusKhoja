@@ -35,13 +35,13 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6  justify-center text-[16px] font-medium tracking-wide [&:has(a:hover)_a:not(:hover)]:text-muted-foreground [&_a:hover]:text-foreground">
             <Link
-              href="/"
+              href="/map"
               className={cn(
                 "cursor-pointer transition-colors duration-300 text-sm font-medium text-muted-foreground hover:text-primary",
-                pathname === "/" && "underline",
+                pathname === "/map" && "underline",
               )}
             >
-              Home
+              Map
             </Link>
             <Link
               href="/routes"
@@ -51,6 +51,24 @@ export function Header() {
               )}
             >
               Routes
+            </Link>
+            <Link
+              href="/buses"
+              className={cn(
+                "cursor-pointer transition-colors duration-300 text-sm font-medium text-muted-foreground hover:text-primary",
+                pathname === "/buses" && "underline",
+              )}
+            >
+              Buses
+            </Link>
+            <Link
+              href="/locations"
+              className={cn(
+                "cursor-pointer transition-colors duration-300 text-sm font-medium text-muted-foreground hover:text-primary",
+                pathname === "/locations" && "underline",
+              )}
+            >
+              Locations
             </Link>
             <Link
               href="/about"
@@ -87,14 +105,20 @@ export function Header() {
             className="md:hidden border-t py-4"
           >
             <div className="flex flex-col gap-4">
-              <Link href="/" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-                Home
+              <Link href="/map" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+                Map
               </Link>
               <Link
                 href="/routes"
                 className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
               >
                 Routes
+              </Link>
+              <Link href="/locations" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+                Locations
+              </Link>
+              <Link href="/buses" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+                Buses
               </Link>
               <Link
                 href="/about"

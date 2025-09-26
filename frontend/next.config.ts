@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ["res.cloudinary.com", "example.com", "img.icons8.com"],
+    unoptimized: true,
   },
   output: "standalone",
 };

@@ -7,7 +7,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import "leaflet-defaulticon-compatibility";
 import L from "leaflet";
 import { useState } from "react";
-import { MapContainer, Marker, Popup, SVGOverlay, TileLayer, useMapEvents } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 
 const busIcon = L.divIcon({
   className: "",
@@ -69,11 +69,11 @@ export default function Map() {
                 position={[busPosition[0] + offset, busPosition[1]]}
                 icon={busIcon}
               >
-                <Popup>Projapoti 1</Popup>
+                <Popup>Bosumoti</Popup>
               </Marker>
 
               <Marker position={busPosition} icon={busIcon}>
-                <Popup>Projapoti 2</Popup>
+                <Popup>Super link</Popup>
               </Marker>
 
               <Marker
@@ -86,7 +86,7 @@ export default function Map() {
                 position={[23.829024583539244, 90.36380055752866]}
                 icon={busIcon}
               >
-                <Popup>Prorisstan</Popup>
+                <Popup>ROb rob</Popup>
               </Marker>
               <Marker
                 position={[23.82715460175573, 90.3641203603026]}
