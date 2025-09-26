@@ -65,26 +65,28 @@ export default function Map() {
             <>
 
               <Marker position={[23.829309910104588, 90.36784940356998]} icon={busIcon}>
-                <Popup>Super link</Popup>
+                <Popup>Osim</Popup>
               </Marker>
 
               <Marker
                 position={[23.8250108944537, 90.36420338846231]}
                 icon={busIcon}
               >
-                <Popup>Bosumoti</Popup>
+                <Popup>Boshumoti</Popup>
               </Marker>
               <Marker
                 position={[23.829024583539244, 90.36380055752866]}
                 icon={busIcon}
               >
-                <Popup>Bikolpo</Popup>
+                <Popup>Rajhdhani</Popup>
               </Marker>
               <Marker
                 position={[23.82715460175573, 90.3641203603026]}
                 icon={busIcon}
               >
-                <Popup>Prorisstan</Popup>
+                <Popup>
+                  Poristhan
+                </Popup>
               </Marker>
             </>
           )

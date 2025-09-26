@@ -104,7 +104,6 @@ function RouteSearchPage() {
           </motion.button>
 
           <motion.button
-            disabled={(routeGroups?.length ?? 0) > 0}
             whileTap={{ scale: 0.98 }}
             onClick={() => {
               setPassengerType("student");
@@ -307,10 +306,10 @@ function RouteSearchPage() {
                                           <h3 className="font-semibold text-foreground text-sm sm:text-base truncate">
                                             {busOnRoute.bus.name}
                                           </h3>
-                                          {busOnRoute.bus.full_path && (
+                                          {routeGroup.from && routeGroup.to && (
                                             <div className="flex items-center gap-1 mt-1 text-xs text-muted-foreground">
                                               <MapPin className="h-3 w-3 flex-shrink-0" />
-                                              <span className="truncate">{busOnRoute.bus.full_path}</span>
+                                              <span className="truncate">{`${routeGroup.from.name} -> ${routeGroup.to.name}`}</span>
                                             </div>
                                           )}
                                         </div>

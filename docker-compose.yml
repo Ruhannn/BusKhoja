@@ -42,6 +42,7 @@ services:
       DB_USER: Ruhan
       DB_NAME: bus-khoja
       DB_PASSWORD_FILE: /run/secrets/db-password
+      DATABASE_URL: ${DATABASE_URL}
     depends_on:
       postgres:
         condition: service_healthy
@@ -58,6 +59,9 @@ services:
   frontend:
     image: kamiruu/bus-khoja-frontend:latest
     container_name: bus-khoja-frontend
+    environment:
+      - NEXT_PUBLIC_API_URL=https://api.buskhoja.xyz
+      - RESEND_API_KEY=${RESEND_API_KEY}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`buskhoja.xyz`)"

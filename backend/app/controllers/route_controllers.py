@@ -21,10 +21,6 @@ def create_route(req):
     req.send(200, res)
 
 # get all routes
-from app.db.client import DB
-
-db = DB()
-
 def get_routes(req):
     query = """
     SELECT
@@ -40,7 +36,7 @@ def get_routes(req):
                     'id', b.id,
                     'name', b.name,
                     'picture', b.picture,
-                    'full_path', b.full_path
+                    'full_path', b.picture
                 )
             ) FILTER (WHERE b.id IS NOT NULL),
             '[]'
@@ -48,7 +44,7 @@ def get_routes(req):
     FROM route r
     JOIN location l1 ON r.from_id = l1.id
     JOIN location l2 ON r.to_id = l2.id
-    LEFT JOIN bus b ON b.route_id = r.id
+    LEFT JOIN bus b ON r.id = ANY(b.route_ids)
     GROUP BY r.id, r.price, l1.id, l2.id;
     """
     routes = db.all(query)
@@ -100,10 +96,11 @@ def search_buses(req):
         return req.send(400, {"message": "Invalid 'from' or 'to' parameter"})
 
     try:
+        # Use %s placeholders for parameters
         results = db.all("""
             SELECT b.*, r.price, l_from.name AS from_location, l_to.name AS to_location
             FROM route r
-            JOIN bus b ON b.route_id = r.id
+            JOIN bus b ON r.id = ANY(b.route_ids)
             JOIN location l_from ON r.from_id = l_from.id
             JOIN location l_to ON r.to_id = l_to.id
             WHERE r.from_id = %s AND r.to_id = %s
@@ -115,7 +112,7 @@ def search_buses(req):
                 "bus": {
                     "name": row["name"],
                     "picture": row.get("picture"),
-                    "full_path": row.get("full_path"),
+                    "full_path": row.get("picture"),  # your full_path field
                 }
             }
             for row in results

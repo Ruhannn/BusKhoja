@@ -7,14 +7,15 @@ db = DB()
 def create_bus(req):
     body = req.json()
     bus_id = str(uuid.uuid4())
+    route_ids = body.get("routeIds", [])  
     db.run("""
-        INSERT INTO bus (id, route_id, bus_name, full_path)
+        INSERT INTO bus (id, name, picture, route_ids)
         VALUES ($1, $2, $3, $4)
     """, (
         bus_id,
-        body.get("routeId"),
         body.get("busName"),
-        body.get("fullPath")
+        body.get("fullPath"),  # assuming 'fullPath' is your picture
+        route_ids  # PostgreSQL array
     ))
 
     res = {
@@ -22,6 +23,7 @@ def create_bus(req):
         "bus": body
     }
     req.send(200, res)
+
 
 # get all buses
 def get_buses(req):
@@ -32,6 +34,7 @@ def get_buses(req):
     }
     req.send(200, res)
 
+
 # get bus by id
 def get_bus_by_id(req):
     bus_id = req.params["id"]
@@ -39,6 +42,7 @@ def get_bus_by_id(req):
     if not bus:
         return req.send(404, {"error": "Bus not found"})
     req.send(200, {"bus": dict(bus)})
+
 
 # update bus
 def update_bus(req):
@@ -49,14 +53,16 @@ def update_bus(req):
     if not current:
         return req.send(404, {"error": "Bus not found"})
 
-    bus_name = body.get("busName", current["bus_name"])
-    full_path = body.get("fullPath", current["full_path"])
+    bus_name = body.get("busName", current["name"])
+    picture = body.get("fullPath", current["picture"])
+    route_ids = body.get("routeIds", current["route_ids"])
 
     db.run("""
-        UPDATE buses SET bus_name = $1, full_path = $2 WHERE id = $3
-    """, (bus_name, full_path, bus_id))
+        UPDATE bus SET name = $1, picture = $2, route_ids = $3 WHERE id = $4
+    """, (bus_name, picture, route_ids, bus_id))
 
     req.send(200, {"message": "Bus updated successfully"})
+
 
 # delete bus
 def delete_bus(req):

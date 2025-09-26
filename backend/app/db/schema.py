@@ -24,10 +24,10 @@ def create_tables():
 
     # bus (each bus belongs to a route)
     db.run("""
-    CREATE TABLE IF NOT EXISTS bus (
-        id SERIAL PRIMARY KEY,
-        name TEXT NOT NULL,
-        picture TEXT,
-        route_id INT NOT NULL REFERENCES route(id) ON DELETE CASCADE
-    );
+   CREATE TABLE IF NOT EXISTS bus (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    picture TEXT,
+    route_ids INT[] DEFAULT '{}'
+);
     """)

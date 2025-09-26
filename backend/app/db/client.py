@@ -5,8 +5,7 @@ import psycopg2.extras
 class DB:
     def __init__(self, dsn=None):
         if dsn is None:
-            dsn = "postgresql://Ruhan:databasePass21312@postgres:5432/bus-khoja"
-
+            dsn = os.environ.get("DATABASE_URL")
 
         self.dsn = dsn
         self.conn = psycopg2.connect(self.dsn)
