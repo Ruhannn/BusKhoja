@@ -135,7 +135,13 @@ export function LocationCombobox({
                               >
                                 <Check className="mr-2 h-4 w-4" />
                               </motion.div>
-                              <span className="truncate">{location.name}</span>
+                              <span className="truncate">
+                                {location.name
+                                  .split(" ")
+                                  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                                  .join(" ")}
+                              </span>
+
                             </CommandItem>
                           </motion.div>
                         ))}
