@@ -98,10 +98,10 @@ export default function Chat() {
             >
               {/* Header */}
               <header className="flex items-center justify-between p-4 bg-primary text-primary-foreground flex-shrink-0">
-                <h2 className="text-lg font-semibold">BusKhu ;3</h2>
+                <h2 className="text-lg font-semibold italic">BusKhu ;3</h2>
                 <motion.button
                   onClick={() => setIsOpen(false)}
-                  className="p-1 rounded-full hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                  className="p-2 cursor-pointer rounded-full hover:bg-background/20"
                   whileHover={{ rotate: 90 }}
                   aria-label="Close travel assistant"
                 >
@@ -109,7 +109,7 @@ export default function Chat() {
                 </motion.button>
               </header>
 
-              <main className="flex-grow p-5 overflow-y-auto text-gray-700">
+              <main className="flex-grow p-5 overflow-y-auto bg-secondary text-secondary-foreground">
                 {isLoading ? (
                   <LoadingSpinner />
                 ) : error ? (
@@ -123,13 +123,13 @@ export default function Chat() {
                   </div>
                 ) : (
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">Hello!</h3>
-                    <p>How can I help you with your route today?</p>
+                    <h3 className="text-lg font-semibold mb-2">Hello!</h3>
+                    <p className="text-muted-foreground">How can I help you with your route today?</p>
                   </div>
                 )}
               </main>
 
-              <footer className="p-4 bg-gray-50 border-t border-gray-200 flex-shrink-0">
+              <footer className="p-4 bg-secondary flex-shrink-0">
                 {response || error
                   ? (
                       <Button
@@ -146,7 +146,7 @@ export default function Chat() {
                           value={query}
                           onChange={e => setQuery(e.target.value)}
                           placeholder="e.g., Mirpur 10 to Mirpur 12"
-                          className="flex-grow p-2 border border-gray-300 rounded-lg focus:ring-2"
+                          className="flex-grow p-2 border border-border rounded-lg focus:ring-2"
                           disabled={isLoading}
                         />
                         <Button

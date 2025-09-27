@@ -45,7 +45,7 @@ export function HeroSection() {
           >
             Find bus routes &
             {" "}
-            <LineShadowText className="text-balance text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl text-primary" shadowColor="black">
+            <LineShadowText className="text-balance text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl text-primary">
               fares
             </LineShadowText>
           </h1>
@@ -68,10 +68,17 @@ export function HeroSection() {
               className="mt-10 "
             >
               <Button
-                size="lg"
-                className="h-14 px-8 text-lg font-semibold shadow-lg hover:scale-105 hover:shadow-xl cursor-pointer"
+                className="h-14 px-8! text-lg font-semibold shadow-lg hover:scale-105 hover:shadow-xl cursor-pointer"
                 onClick={() => document.querySelector("#route-finder")?.scrollIntoView({ behavior: "smooth" })}
               >
+                <Magnetic
+                  intensity={0.1}
+                  springOptions={{ bounce: 0.1 }}
+                  actionArea="global"
+                  range={400}
+                >
+                  <Bus className="size-[18px]" />
+                </Magnetic>
                 <Magnetic
                   intensity={0.1}
                   springOptions={{ bounce: 0.1 }}

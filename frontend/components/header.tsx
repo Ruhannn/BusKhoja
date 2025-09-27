@@ -9,6 +9,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+import { ThemeSwitch } from "./theme-switch";
+
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -89,6 +91,7 @@ export function Header() {
               Contact
             </Link>
           </nav>
+          <ThemeSwitch />
 
           {/* Mobile Menu Button */}
           <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>

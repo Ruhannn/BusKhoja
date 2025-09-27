@@ -3,6 +3,8 @@
 import type { MotionProps } from "motion/react";
 
 import { motion } from "motion/react";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -13,21 +15,29 @@ type LineShadowTextProps = {
 
 export function LineShadowText({
   children,
-  shadowColor = "black",
   className,
   as: Component = "span",
   ...props
 }: LineShadowTextProps) {
+  const [mounted, setMounted] = useState(false);
+  const { theme } = useTheme();
   const MotionComponent = motion.create(Component);
-  const content = typeof children === "string" ? children : null;
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const content = typeof children === "string" ? children : null;
   if (!content) {
     throw new Error("LineShadowText only accepts string content");
   }
 
+  if (!mounted)
+    return null;
+
   return (
     <MotionComponent
-      style={{ "--shadow-color": shadowColor } as React.CSSProperties}
+      style={{ "--shadow-color": theme === "dark" ? "#ffffff" : "#000000" } as React.CSSProperties}
       className={cn(
         "relative z-0 inline-flex",
         "after:absolute after:top-[0.04em] after:left-[0.04em] after:content-[attr(data-text)]",

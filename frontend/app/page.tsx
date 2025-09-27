@@ -3,18 +3,12 @@ import { FeaturesSection } from "@/components/features-section";
 import { HeroSection } from "@/components/hero-section";
 import { QuickLinks } from "@/components/quick-links";
 import { RouteFinder } from "@/components/route-finder";
-import { Particles } from "@/components/ui/particles";
+import Bg from "@/components/ui/bg";
 
 export default function Home() {
   return (
     <div className="min-h-screen relative overflow-hidden">
-      <Particles
-        className="absolute inset-0 z-0"
-        quantity={350}
-        ease={80}
-        color="#000000"
-        refresh
-      />
+      <Bg />
       <Chat />
       {/* Hero Section */}
       <div className="relative px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32 z-10">

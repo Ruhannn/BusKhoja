@@ -112,7 +112,7 @@ def search_buses(req):
                 "bus": {
                     "name": row["name"],
                     "picture": row.get("picture"),
-                    "full_path": row.get("picture"),  # your full_path field
+                    "full_path": row.get("picture"),
                 }
             }
             for row in results

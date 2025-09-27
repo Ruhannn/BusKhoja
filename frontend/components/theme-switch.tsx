@@ -55,7 +55,7 @@ export function ThemeSwitch() {
   return (
     <div
       ref={ref}
-      className="absolute top-3 right-3 z-10"
+      className=""
     >
       <Button
         size="icon"
